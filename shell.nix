@@ -8,10 +8,11 @@ mkShell {
   buildInputs =
     let
       pgWithExt = { pg }: pg.withPackages (p: [ (callPackage ./nix/supa_audit { postgresql = pg; }) ]);
+      pg_15_w_supa_audit = callPackage ./nix/supa_audit/pgScript.nix { postgresql = pgWithExt { pg = postgresql_15; }; };
       pg_14_w_supa_audit = callPackage ./nix/supa_audit/pgScript.nix { postgresql = pgWithExt { pg = postgresql_14; }; };
       pg_13_w_supa_audit = callPackage ./nix/supa_audit/pgScript.nix { postgresql = pgWithExt { pg = postgresql_13; }; };
       pg_12_w_supa_audit = callPackage ./nix/supa_audit/pgScript.nix { postgresql = pgWithExt { pg = postgresql_12; }; };
       pg_11_w_supa_audit = callPackage ./nix/supa_audit/pgScript.nix { postgresql = pgWithExt { pg = postgresql_11; }; };
     in
-    [ pg_14_w_supa_audit pg_13_w_supa_audit pg_12_w_supa_audit pg_11_w_supa_audit ];
+    [ pg_15_w_supa_audit pg_14_w_supa_audit pg_13_w_supa_audit pg_12_w_supa_audit pg_11_w_supa_audit ];
 }
